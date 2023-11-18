@@ -43,6 +43,7 @@ io.on("connection", (socket) => {
     socket.broadcast.emit("userCameraChanged", { isCameraOff });
   });
   socket.on("message", ({ userToCall, message }) => {
+    console.log(userToCall, message);
     io.to(userToCall).emit("message", { message, from: socket.id });
   });
 });

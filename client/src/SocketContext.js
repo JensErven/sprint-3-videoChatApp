@@ -20,6 +20,7 @@ const ContextProvider = ({ children }) => {
   const [userCameraOff, setUserCameraOff] = useState(false);
   const [name, setName] = useState("");
   const [reloadPage, setReloadPage] = useState(false); // State to control reload
+  const [communicatingWith, setCommunicatingWith] = useState(null);
 
   useEffect(() => {
     navigator.mediaDevices
@@ -74,6 +75,8 @@ const ContextProvider = ({ children }) => {
     connectionRef.current = peer;
   };
   const callUser = (id) => {
+    setCommunicatingWith(id); // Set the user you're communicating with
+
     // with initiator we indicate who is the caller
     const peer = new Peer({ initiator: true, trickle: false, stream });
     peer.on("signal", (data) => {
@@ -108,6 +111,13 @@ const ContextProvider = ({ children }) => {
     setReloadPage(true);
   };
 
+  // Update the message sending to use the state value
+  const sendMessage = (message, userToCall) => {
+    socket.emit("message", { userToCall: userToCall, message });
+
+    // ... (other code)
+  };
+
   return (
     <SocketContext.Provider
       value={{
@@ -126,6 +136,8 @@ const ContextProvider = ({ children }) => {
         answerCall,
         userMutedSelf,
         userCameraOff,
+        communicatingWith,
+        sendMessage,
       }}
     >
       {children}

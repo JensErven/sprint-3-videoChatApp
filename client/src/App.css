@@ -2,6 +2,29 @@
   min-height: 100vh;
   max-height: fit-content;
   padding-bottom: 50px;
+  background-color: #06090F;
 }
+
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+/* Track (the empty space in the scrollbar) */
+::-webkit-scrollbar-track {
+  border-radius: 4px;
+  background:#242E47;
+}
+
+/* Handle (the draggable part of the scrollbar) */
+::-webkit-scrollbar-thumb {
+  background: #131927;
+  border-radius: 4px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #1E293B;
+}
+
 
 
