@@ -3,6 +3,7 @@ const server = require("http").createServer(app);
 const cors = require("cors");
 
 const allowedOrigins = [
+  "https://videochat-ochre.vercel.app",
   "https://videochat-ochre.vercel.app/",
   "http://localhost:3000", // Add your development URL
   // Add more allowed URLs if needed
