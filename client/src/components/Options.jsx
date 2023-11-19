@@ -1,7 +1,7 @@
 import React, { useContext, useState, useEffect } from "react";
 import CopyToClipboard from "react-copy-to-clipboard";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { io } from "socket.io-client";
+import io from "socket.io-client";
 
 import {
   faCopy,
