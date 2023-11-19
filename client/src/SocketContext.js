@@ -4,8 +4,11 @@ import io from "socket.io-client";
 import Peer from "simple-peer";
 
 const SocketContext = createContext();
-
-const socket = io("http://localhost:5000");
+const isDevelopment = true;
+const socketURL = isDevelopment
+  ? "http://localhost:5000"
+  : "https://videochat-backend.onrender.com";
+const socket = io(socketURL);
 
 const ContextProvider = ({ children }) => {
   const myVideo = useRef();

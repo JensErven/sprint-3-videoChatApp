@@ -2,8 +2,14 @@ const app = require("express")();
 const server = require("http").createServer(app);
 const cors = require("cors");
 
+const allowedOrigins = [
+  "https://videochat-ochre.vercel.app/",
+  "http://localhost:3000", // Add your development URL
+  // Add more allowed URLs if needed
+];
+
 const io = require("socket.io")(server, {
-  cors: { origin: "*", methods: ["GET", "POST"] },
+  cors: { origin: allowedOrigins, methods: ["GET", "POST"] },
 });
 
 app.use(cors());
