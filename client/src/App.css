@@ -1,7 +1,8 @@
 .App {
-  min-height: 100vh;
-  max-height: fit-content;
+
+  max-height: 100vh;
   padding-bottom: 50px;
+  scroll-behavior: none;
   background-color: #06090F;
 }
 

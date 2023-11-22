@@ -37,7 +37,7 @@ function App() {
     setChatZIndex(openChat ? 999 : 0);
   }, [openChat]);
   return (
-    <div className="App bg-slate-950 relative ">
+    <div className="App  relative h-[100vh] flex flex-col overflow-y-hidden">
       <AppBar />
       <VideoPlayer
         setCallDuration={setCallDuration}

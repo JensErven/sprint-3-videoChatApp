@@ -90,11 +90,11 @@ const VideoPlayer = ({
       .padStart(2, "0")}`;
   };
   return (
-    <div className="flex flex-col justify-center gap-y-2  items-center px-4   ">
+    <div className="flex flex-col justify-center gap-y-2  items-center px-4 h-[80%]  ">
       {stream && (
-        <div className="lg:w-1/2 w-full xl:w-1/2 md:w-1/2  ">
-          <div className="bg-[#06090F] flex flex-col rounded-md relative">
-            <div className="absolute bg-slate-900 top-0 right-0 justify-center items-center flex flex-row z-50 rounded-tr-2xl rounded-bl-3xl px-4 py-2 text-stone-200 gap-2">
+        <div className="lg:w-1/2 w-full xl:w-1/2 md:w-1/2 h-1/2 ">
+          <div className="bg-[#06090F] flex flex-col rounded-md relative  h-full">
+            <div className="absolute bg-slate-900 top-1 right-1 justify-center items-center flex flex-row z-50 rounded-tr-3xl rounded-bl-3xl rounded-tl-md  rounded-br-md px-4 py-2 text-stone-200 gap-2">
               {" "}
               <span className="text-slate-600 font-bold">(You) </span>
               {name || "Name"} <FontAwesomeIcon icon={faUserCircle} />
@@ -106,7 +106,7 @@ const VideoPlayer = ({
                 muted
                 autoPlay
                 ref={myVideo}
-                className="w-full  -scale-x-100 object-cover rounded-t-3xl  rounded-b-md h-[40vh] bg-slate-600"
+                className="w-full  -scale-x-100 object-cover rounded-t-3xl  rounded-b-md h-full bg-slate-600"
               />
             ) : (
               <div className="h-[40vh] bg-slate-600 w-full rounded-t-3xl rounded-b-md flex flex-row items-center justify-center">
@@ -121,9 +121,9 @@ const VideoPlayer = ({
         </div>
       )}
       {callAccepted && !callEnded && (
-        <div className="lg:w-1/2 w-full xl:w-1/2 md:w-1/2 ">
-          <div className="bg-[#06090F] flex flex-col relative">
-            <div className="absolute bg-slate-900 bottom-0 left-0 justify-center items-center flex flex-row z-50 rounded-bl-2xl rounded-tr-3xl px-4 py-2 text-stone-200 gap-2">
+        <div className="lg:w-1/2 w-full xl:w-1/2 md:w-1/2  h-1/2 ">
+          <div className="bg-[#06090F] flex flex-col relative h-full">
+            <div className="absolute bg-slate-900 bottom-1 left-1 justify-center items-center flex flex-row z-50 rounded-bl-3xl rounded-tr-3xl rounded-tl-md rounded-br-md px-4 py-2 text-stone-200 gap-2">
               <FontAwesomeIcon icon={faUserCircle} fontSize={25} />
               {call.name || "Name"}
               <div className="w-0.5 h-4 bg-stone-200"></div>
@@ -140,7 +140,7 @@ const VideoPlayer = ({
                     playsInline
                     autoPlay
                     ref={userVideo}
-                    className="w-full rounded-b-3xl -scale-x-100 object-cover rounded-t-md  h-[40vh] bg-slate-600 "
+                    className="w-full rounded-b-3xl -scale-x-100 object-cover rounded-t-md  h-full bg-slate-600 "
                     muted // Apply the 'muted' attribute when personMuted is true
                   />
                 ) : (
@@ -148,7 +148,7 @@ const VideoPlayer = ({
                     playsInline
                     autoPlay
                     ref={userVideo}
-                    className="w-full rounded-b-3xl -scale-x-100 object-cover   rounded-t-md  h-[40vh] bg-slate-600"
+                    className="w-full rounded-b-3xl -scale-x-100 object-cover   rounded-t-md  h-full bg-slate-600"
                   />
                 )}
               </>

@@ -7,10 +7,10 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
-
+/**bg-[#06090F] */
 const AppBar = () => {
   return (
-    <div className="w-full h-14 flex flex-row justify-between bg-[#06090F] items-center p-4">
+    <div className="w-full flex flex-row justify-between   items-center h-[10%] pl-4">
       <button onClick={console.log("open navigation menu")}>
         <FontAwesomeIcon
           icon={faBars}
