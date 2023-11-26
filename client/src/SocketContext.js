@@ -4,7 +4,7 @@ import io from "socket.io-client";
 import Peer from "simple-peer";
 
 const SocketContext = createContext();
-const isDevelopment = true;
+const isDevelopment = false;
 const socketURL = isDevelopment
   ? "http://localhost:5000"
   : "https://videochat-backend.onrender.com";
