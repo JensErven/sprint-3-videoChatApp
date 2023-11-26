@@ -4,7 +4,7 @@ import io from "socket.io-client";
 import Peer from "simple-peer";
 
 const SocketContext = createContext();
-const isDevelopment = false;
+const isDevelopment = true;
 const socketURL = isDevelopment
   ? "http://localhost:5000"
   : "https://videochat-backend.onrender.com";
@@ -15,7 +15,7 @@ const ContextProvider = ({ children }) => {
   const userVideo = useRef();
   const connectionRef = useRef();
   const [stream, setStream] = useState(null);
-  const [me, setMe] = useState("");
+  const [me, setMe] = useState({});
   const [call, setCall] = useState({});
   const [callAccepted, setCallAccepted] = useState(false);
   const [callEnded, setCallEnded] = useState(false);
@@ -24,6 +24,10 @@ const ContextProvider = ({ children }) => {
   const [name, setName] = useState("");
   const [reloadPage, setReloadPage] = useState(false); // State to control reload
   const [communicatingWith, setCommunicatingWith] = useState(null);
+  const [users, setUsers] = useState([]);
+  const [calling, setCalling] = useState(false);
+  const [callingWith, setCallingWith] = useState({});
+  const [newMessage, setNewMessage] = useState(false);
 
   useEffect(() => {
     navigator.mediaDevices
@@ -34,10 +38,15 @@ const ContextProvider = ({ children }) => {
           myVideo.current.srcObject = currentStream;
         }
       });
-    socket.on("me", (id) => setMe(id));
+    socket.on("me", (user) => {
+      console.log(user.name);
+
+      setMe(user);
+    });
     socket.on("calluser", ({ from, name: callerName, signal }) => {
       setCall({ isReceivedCall: true, from, name: callerName, signal });
     });
+    socket.on("message", setNewMessage(true));
     socket.on("reloadPage", () => {
       setReloadPage(true); // Set the state to trigger reload
     });
@@ -57,7 +66,18 @@ const ContextProvider = ({ children }) => {
         setUserCameraOff(false);
       }
     });
+    socket.on("users", (updatedUsers) => {
+      setUsers(updatedUsers);
+    });
+
+    socket.on("callingwith", ({ name, id }) => {
+      setCallingWith({ name: name, id: id });
+    });
   }, []);
+
+  useEffect(() => {
+    console.log(users);
+  }, [users]);
 
   useEffect(() => {
     if (reloadPage) {
@@ -67,6 +87,7 @@ const ContextProvider = ({ children }) => {
 
   const answerCall = () => {
     setCallAccepted(true);
+    setCalling(true);
     const peer = new Peer({ initiator: false, trickle: false, stream });
     peer.on("signal", (data) => {
       socket.emit("answercall", { signal: data, to: call.from });
@@ -79,14 +100,14 @@ const ContextProvider = ({ children }) => {
   };
   const callUser = (id) => {
     setCommunicatingWith(id); // Set the user you're communicating with
-
+    setCalling(true);
     // with initiator we indicate who is the caller
     const peer = new Peer({ initiator: true, trickle: false, stream });
     peer.on("signal", (data) => {
       socket.emit("calluser", {
         userToCall: id,
         signalData: data,
-        from: me,
+        from: me.id,
         name,
       });
     });
@@ -103,8 +124,9 @@ const ContextProvider = ({ children }) => {
 
   const leaveCall = () => {
     setCallEnded(true);
+    setCalling(false);
     // Emit an event to the backend when leaving the call
-    socket.emit("leaveCall");
+    socket.emit("leaveCall", { user1: me.id, user2: callingWith.id });
     // Properly destroy the connection
     // if (connectionRef.current) {
     //   connectionRef.current.destroy();
@@ -115,15 +137,30 @@ const ContextProvider = ({ children }) => {
   };
 
   // Update the message sending to use the state value
-  const sendMessage = (message, userToCall) => {
-    socket.emit("message", { userToCall: userToCall, message });
+  const sendMessage = (message, callingWith, communicatingWith) => {
+    socket.emit("message", {
+      callingWith: callingWith,
+      message,
+      sender: me.id,
+    });
 
     // ... (other code)
+  };
+
+  const joinWithUserName = (userName) => {
+    socket.emit("join", userName);
+  };
+
+  const disconnect = () => {
+    setCalling(false);
+    socket.disconnect();
+    window.location.reload();
   };
 
   return (
     <SocketContext.Provider
       value={{
+        users,
         socket,
         call,
         callAccepted,
@@ -140,7 +177,13 @@ const ContextProvider = ({ children }) => {
         userMutedSelf,
         userCameraOff,
         communicatingWith,
+        joinWithUserName,
         sendMessage,
+        disconnect,
+        calling,
+        callingWith,
+        newMessage,
+        setNewMessage,
       }}
     >
       {children}

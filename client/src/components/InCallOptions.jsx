@@ -16,6 +16,8 @@ import {
   faXmark,
   faMicrophoneSlash,
   faVideoSlash,
+  faExclamation,
+  faExclamationCircle,
 } from "@fortawesome/free-solid-svg-icons";
 
 const InCallOptions = ({
@@ -62,6 +64,7 @@ const InCallOptions = ({
       socket.disconnect();
     };
   }, []);
+
   return (
     <div className="flex flex-row justify-around gap-2 p-8 absolute w-full bottom-0">
       <button
@@ -94,6 +97,7 @@ const InCallOptions = ({
         )}
       </button>
       <button
+        disabled
         className="bg-[#1A1C22] flex items-center justify-center w-14 h-14 rounded-full"
         onClick={() => setOwnCameraOff(!ownCameraOff)}
       >
@@ -104,7 +108,8 @@ const InCallOptions = ({
         )}
       </button>
       <button
-        className="bg-[#2E59F2] flex items-center justify-center w-14 h-14 rounded-full"
+        disabled
+        className="bg-[#2E59F2] flex items-center justify-center w-14 h-14 rounded-full relative"
         onClick={() => setOpenChat(!openChat)}
       >
         <FontAwesomeIcon

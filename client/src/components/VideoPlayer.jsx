@@ -40,6 +40,8 @@ const VideoPlayer = ({
     socket,
     userMutedSelf,
     userCameraOff,
+    me,
+    callingWith,
   } = useContext(SocketContext);
 
   // useStates for the timer
@@ -90,14 +92,14 @@ const VideoPlayer = ({
       .padStart(2, "0")}`;
   };
   return (
-    <div className="flex flex-col justify-center gap-y-2  items-center px-4 h-[80%]  ">
+    <div className="flex flex-col justify-center gap-y-2  items-center px-4 h-[80%] mt-[10%] ">
       {stream && (
         <div className="lg:w-1/2 w-full xl:w-1/2 md:w-1/2 h-1/2 ">
           <div className="bg-[#06090F] flex flex-col rounded-md relative  h-full">
             <div className="absolute bg-slate-900 top-1 right-1 justify-center items-center flex flex-row z-50 rounded-tr-3xl rounded-bl-3xl rounded-tl-md  rounded-br-md px-4 py-2 text-stone-200 gap-2">
               {" "}
               <span className="text-slate-600 font-bold">(You) </span>
-              {name || "Name"} <FontAwesomeIcon icon={faUserCircle} />
+              {me.name || "Name"} <FontAwesomeIcon icon={faUserCircle} />
             </div>
 
             {!ownCameraOff ? (
@@ -125,7 +127,7 @@ const VideoPlayer = ({
           <div className="bg-[#06090F] flex flex-col relative h-full">
             <div className="absolute bg-slate-900 bottom-1 left-1 justify-center items-center flex flex-row z-50 rounded-bl-3xl rounded-tr-3xl rounded-tl-md rounded-br-md px-4 py-2 text-stone-200 gap-2">
               <FontAwesomeIcon icon={faUserCircle} fontSize={25} />
-              {call.name || "Name"}
+              {callingWith.name || "Name"}
               <div className="w-0.5 h-4 bg-stone-200"></div>
               <span className="flex flex-row items-center justify-center gap-2">
                 <div className="w-2 h-2 bg-green-500 rounded-full"></div>

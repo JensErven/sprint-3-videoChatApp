@@ -2,3 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
+html {
+    font-family: 'Quicksand', sans-serif;
+  }

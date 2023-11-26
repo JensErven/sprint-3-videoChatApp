@@ -42,7 +42,7 @@ const Options = ({ children }) => {
               ></input>
               {console.log(me)}
               <CopyToClipboard
-                text={me}
+                text={me.id}
                 className="bg-blue-500 flex flex-row p-2 items-center gap-2 rounded-lg justify-center"
               >
                 <button className="" formNoValidate type="button">
